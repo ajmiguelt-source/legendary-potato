@@ -1,0 +1,3246 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#58c1f2">
+  <title>Pocket World — Explore responsibly</title>
+  <style>
+    :root {
+      color-scheme: light;
+      font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+      color: #123b79;
+      background: #75c9f3;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      margin: 0;
+      background: #7ecdfb;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .page.is-active {
+      display: flex;
+    }
+
+    .landing {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #58baf1;
+    }
+
+    .poster {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      flex: none;
+      overflow: hidden;
+    }
+
+    .poster-image {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    .hotspot {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .hotspot:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    .hotspot:focus-visible {
+      outline: 3px solid #fff;
+      outline-offset: 2px;
+      background: rgba(255, 255, 255, 0.22);
+      box-shadow: 0 0 0 6px #0759b5;
+    }
+
+    .hotspot-menu {
+      top: 2.7%;
+      left: 89.8%;
+      width: 7%;
+      height: 3.5%;
+      border-radius: 8px;
+    }
+
+    .hotspot-explore {
+      top: 42.3%;
+      left: 79.2%;
+      width: 20.8%;
+      height: 6.2%;
+    }
+
+    .hotspot-learn {
+      top: 49.6%;
+      left: 79.5%;
+      width: 20.5%;
+      height: 5.5%;
+    }
+
+    .hotspot-travel {
+      top: 55.6%;
+      left: 79.5%;
+      width: 20.5%;
+      height: 5.5%;
+    }
+
+    .hotspot-difference {
+      top: 61.3%;
+      left: 78.5%;
+      width: 21.5%;
+      height: 7.5%;
+    }
+
+    .hotspot-start {
+      top: 77.3%;
+      left: 22.5%;
+      width: 55%;
+      height: 9.7%;
+      border-radius: 999px;
+    }
+
+    .hotspot-about {
+      top: 88%;
+      left: 30.5%;
+      width: 39%;
+      height: 5.5%;
+      border-radius: 999px;
+    }
+
+    .auth-page {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #58baf1;
+    }
+
+    .auth-poster {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      flex: none;
+      overflow: hidden;
+    }
+
+    .auth-poster > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    .auth-back,
+    .auth-input,
+    .auth-submit,
+    .auth-switch,
+    .password-toggle {
+      position: absolute;
+      z-index: 1;
+    }
+
+    .auth-input {
+      height: 4.9%;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: rgba(223, 243, 255, 0.97);
+    }
+
+    .auth-input input {
+      width: 100%;
+      height: 100%;
+      padding: 0 17%;
+      border: 2px solid #a5dcff;
+      border-radius: inherit;
+      outline: 0;
+      color: #123b79;
+      background: transparent;
+      font-size: clamp(12px, 3.4vw, 21px);
+    }
+
+    .auth-input input::placeholder {
+      color: #5579ae;
+      opacity: 1;
+    }
+
+    .auth-input input:focus-visible {
+      border-color: #0759b5;
+      box-shadow: 0 0 0 3px #ffca43;
+    }
+
+    .signup-name {
+      top: 35.2%;
+      left: 23.4%;
+      width: 54.6%;
+    }
+
+    .signup-identity {
+      top: 41.7%;
+      left: 23.4%;
+      width: 54.6%;
+    }
+
+    .signup-password {
+      top: 48.3%;
+      left: 23.4%;
+      width: 54.6%;
+    }
+
+    .signup-confirm {
+      top: 54.9%;
+      left: 23.4%;
+      width: 54.6%;
+    }
+
+    .login-identity {
+      top: 40.7%;
+      left: 25.3%;
+      width: 52%;
+      height: 5.5%;
+    }
+
+    .login-password {
+      top: 48.1%;
+      left: 25.3%;
+      width: 52%;
+      height: 5.5%;
+    }
+
+    .password-toggle {
+      top: 15%;
+      right: 2%;
+      width: 12%;
+      height: 70%;
+      border: 0;
+      border-radius: 50%;
+      background: transparent;
+      color: #416d9f;
+      font-size: clamp(14px, 4vw, 23px);
+      cursor: pointer;
+    }
+
+    .password-toggle:focus-visible,
+    .auth-submit:focus-visible,
+    .auth-switch:focus-visible,
+    .auth-back:focus-visible {
+      outline: 3px solid #0759b5;
+      outline-offset: 2px;
+      background-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .signup-password input,
+    .signup-confirm input,
+    .login-password input {
+      padding-right: 19%;
+    }
+
+    .auth-submit {
+      left: 23.4%;
+      width: 54.6%;
+      height: 5.5%;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+    }
+
+    .signup-submit {
+      top: 61.8%;
+    }
+
+    .login-submit {
+      top: 55.4%;
+      left: 25.3%;
+      width: 52%;
+      height: 6%;
+    }
+
+    .auth-switch {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+    }
+
+    .signup-switch {
+      top: 70%;
+      left: 62%;
+      width: 11%;
+      height: 3%;
+    }
+
+    .login-switch {
+      top: 66.5%;
+      left: 59%;
+      width: 11%;
+      height: 3.5%;
+    }
+
+    .auth-back {
+      top: 1%;
+      left: 2%;
+      padding: 7px 10px;
+      border: 0;
+      border-radius: 10px;
+      background: rgba(9, 96, 199, 0.78);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .auth-notice {
+      position: absolute;
+      z-index: 3;
+      right: 8%;
+      bottom: 1%;
+      left: 8%;
+      margin: 0;
+      padding: 8px 12px;
+      border-radius: 10px;
+      color: #123b79;
+      background: rgba(255, 255, 255, 0.96);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .auth-notice:empty {
+      display: none;
+    }
+
+    .destination-page {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #dff7ff;
+    }
+
+    .destination-poster {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      flex: none;
+      overflow: hidden;
+    }
+
+    .destination-poster > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+    }
+
+    .destination-control {
+      position: absolute;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: transparent;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .destination-control:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .destination-control:focus-visible,
+    .destination-search:focus-visible {
+      outline: 3px solid #ffbf36;
+      outline-offset: 2px;
+    }
+
+    .destination-menu {
+      top: 4.8%;
+      left: 10.5%;
+      width: 6%;
+      height: 3%;
+    }
+
+    .destination-favorites {
+      top: 4.8%;
+      left: 84%;
+      width: 8%;
+      height: 3.2%;
+    }
+
+    .destination-search {
+      position: absolute;
+      z-index: 2;
+      top: 11.9%;
+      left: 10%;
+      width: 71%;
+      height: 3.9%;
+      padding: 0 9%;
+      border: 0;
+      border-radius: 999px;
+      outline: 0;
+      color: #123b79;
+      background: transparent;
+      font-size: clamp(12px, 3vw, 20px);
+    }
+
+    .destination-search::placeholder {
+      color: transparent;
+    }
+
+    .destination-search:focus,
+    .destination-search:not(:placeholder-shown) {
+      background: rgba(255, 255, 255, 0.96);
+    }
+
+    .destination-search:focus::placeholder {
+      color: #718ab2;
+    }
+
+    .destination-filter {
+      top: 11.9%;
+      left: 83%;
+      width: 8%;
+      height: 3.9%;
+    }
+
+    .destination-category {
+      top: 16.7%;
+      height: 3.8%;
+    }
+
+    .destination-category.is-selected {
+      background: transparent;
+    }
+
+    .category-all {
+      left: 10%;
+      width: 14%;
+    }
+
+    .category-beach {
+      left: 25.3%;
+      width: 14.5%;
+    }
+
+    .category-mountains {
+      left: 41%;
+      width: 18%;
+    }
+
+    .category-cities {
+      left: 60.5%;
+      width: 15%;
+    }
+
+    .category-nature {
+      left: 76.5%;
+      width: 14%;
+    }
+
+    .destination-card-area {
+      top: 21.5%;
+      width: 40.5%;
+      height: 14.7%;
+    }
+
+    .card-1 { left: 9%; }
+    .card-2 { left: 51%; }
+    .card-3 { top: 36.7%; left: 9%; }
+    .card-4 { top: 36.7%; left: 51%; }
+    .card-5 { top: 52.1%; left: 9%; }
+    .card-6 { top: 52.1%; left: 51%; }
+    .card-7 { top: 71.9%; left: 9%; height: 12.4%; }
+    .card-8 { top: 71.9%; left: 51%; height: 12.4%; }
+    .card-9 { top: 84.5%; left: 9%; height: 9.7%; }
+    .card-10 { top: 84.5%; left: 51%; height: 9.7%; }
+
+    .destination-favorite {
+      top: 22.2%;
+      left: 42.5%;
+      width: 6%;
+      height: 2.5%;
+      border-radius: 50%;
+      color: transparent;
+    }
+
+    .destination-favorite.is-saved {
+      color: #ff3670;
+      background: rgba(255, 255, 255, 0.8);
+      font-size: clamp(17px, 5vw, 30px);
+      text-shadow: 0 1px 2px #fff;
+    }
+
+    .favorite-2 { left: 84.2%; }
+    .favorite-3 { top: 37.8%; }
+    .favorite-4 { top: 37.8%; left: 84.2%; }
+    .favorite-5 { top: 53.3%; }
+    .favorite-6 { top: 53.3%; left: 84.2%; }
+    .favorite-7 { top: 72.7%; }
+    .favorite-8 { top: 72.7%; left: 84.2%; }
+    .favorite-9 { top: 85.2%; }
+    .favorite-10 { top: 85.2%; left: 84.2%; }
+
+    .destination-open {
+      top: 31.1%;
+      left: 42%;
+      width: 7%;
+      height: 3.2%;
+    }
+
+    .open-2 { left: 84%; }
+    .open-3 { top: 46.6%; }
+    .open-4 { top: 46.6%; left: 84%; }
+    .open-5 { top: 62%; }
+    .open-6 { top: 62%; left: 84%; }
+    .open-7 { top: 79.6%; }
+    .open-8 { top: 79.6%; left: 84%; }
+    .open-9 { top: 90.8%; }
+    .open-10 { top: 90.8%; left: 84%; }
+
+    .more-destinations {
+      top: 67.5%;
+      left: 36%;
+      width: 28%;
+      height: 3.8%;
+    }
+
+    .bottom-tab {
+      top: 93.3%;
+      width: 24%;
+      height: 5.2%;
+      border-radius: 16px;
+    }
+
+    .tab-tips { left: 17%; }
+    .tab-destinations { left: 39%; }
+    .tab-profile { left: 63%; }
+
+    .destination-notice {
+      position: absolute;
+      z-index: 3;
+      top: 8%;
+      left: 50%;
+      width: max-content;
+      max-width: 90%;
+      margin: 0;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: #123b79;
+      background: rgba(255, 255, 255, 0.96);
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      transform: translateX(-50%);
+    }
+
+    .destination-notice:empty {
+      display: none;
+    }
+
+    .page.place-page.is-active {
+      display: block;
+    }
+
+    .place-page {
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior-y: contain;
+      background: #e8f8ff;
+      scrollbar-color: #78bfec #e8f8ff;
+    }
+
+    .place-shell {
+      width: min(100%, 560px);
+      min-height: 100%;
+      margin: 0 auto;
+      padding-bottom: 28px;
+      background: #effaff;
+      box-shadow: 0 0 28px rgba(13, 91, 142, 0.12);
+    }
+
+    .place-hero {
+      position: relative;
+      min-height: 250px;
+      padding: 56px 20px 24px;
+      overflow: hidden;
+      color: #fff;
+      background:
+        radial-gradient(ellipse at 72% 28%, rgba(255, 229, 139, 0.9) 0 8%, transparent 8.5%),
+        linear-gradient(160deg, rgba(36, 191, 231, 0.1) 28%, rgba(0, 82, 144, 0.55) 100%),
+        linear-gradient(180deg, #39bdf5 0%, #51d5ee 45%, #078ab6 46%, #0870a2 100%);
+    }
+
+    .place-hero::before,
+    .place-hero::after {
+      position: absolute;
+      right: -10%;
+      bottom: -46px;
+      left: -10%;
+      height: 110px;
+      border-radius: 50% 50% 0 0;
+      background: rgba(10, 161, 182, 0.65);
+      content: "";
+      transform: rotate(-3deg);
+    }
+
+    .place-hero::after {
+      right: -28%;
+      bottom: -70px;
+      left: 28%;
+      height: 125px;
+      background: rgba(0, 85, 142, 0.35);
+      transform: rotate(8deg);
+    }
+
+    .place-hero[data-category="Cities"] {
+      background:
+        radial-gradient(ellipse at 72% 28%, rgba(255, 229, 139, 0.9) 0 8%, transparent 8.5%),
+        linear-gradient(180deg, #859be8 0%, #e58c91 50%, #153965 100%);
+    }
+
+    .place-hero[data-category="Mountains"],
+    .place-hero[data-category="Nature"] {
+      background:
+        radial-gradient(ellipse at 72% 28%, rgba(255, 229, 139, 0.9) 0 8%, transparent 8.5%),
+        linear-gradient(155deg, #8fd8ec 0%, #5cb8ce 48%, #426e67 49%, #225c51 100%);
+    }
+
+    .place-topbar {
+      position: absolute;
+      z-index: 1;
+      top: 10px;
+      right: 16px;
+      left: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .place-top-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .place-icon-button {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 50%;
+      color: #fff;
+      background: rgba(0, 86, 156, 0.22);
+      font-size: 22px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+    }
+
+    .place-icon-button:focus-visible,
+    .place-tabs button:focus-visible,
+    .place-action:focus-visible,
+    .flight-submit:focus-visible,
+    .activity-chip:focus-visible,
+    .itinerary-add:focus-visible {
+      outline: 3px solid #ffbf36;
+      outline-offset: 2px;
+    }
+
+    .place-category {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      margin: 0 0 6px;
+      padding: 5px 11px;
+      border-radius: 999px;
+      color: #0759b5;
+      background: rgba(255, 255, 255, 0.9);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .place-hero h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(34px, 9vw, 52px);
+      line-height: 1;
+      text-shadow: 0 2px 9px rgba(0, 49, 105, 0.32);
+    }
+
+    .place-location,
+    .place-rating,
+    .place-tagline {
+      position: relative;
+      z-index: 1;
+      margin: 8px 0 0;
+      font-weight: 700;
+      text-shadow: 0 1px 5px rgba(0, 49, 105, 0.35);
+    }
+
+    .place-rating .star {
+      color: #ffcf31;
+    }
+
+    .place-tagline {
+      font-size: 14px;
+    }
+
+    .place-tabs {
+      position: sticky;
+      z-index: 5;
+      top: 0;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3px;
+      padding: 8px 10px;
+      border-bottom: 1px solid #d7effd;
+      border-radius: 0 0 20px 20px;
+      background: rgba(255, 255, 255, 0.97);
+      box-shadow: 0 4px 14px rgba(15, 105, 160, 0.1);
+      backdrop-filter: blur(12px);
+    }
+
+    .place-tabs button {
+      min-height: 42px;
+      padding: 6px 3px;
+      border: 0;
+      border-radius: 999px;
+      color: #52729d;
+      background: transparent;
+      font-size: clamp(11px, 3vw, 14px);
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .place-tabs button.is-active {
+      color: #fff;
+      background: #087fe5;
+      box-shadow: 0 3px 8px rgba(0, 104, 210, 0.25);
+    }
+
+    .place-content {
+      display: grid;
+      gap: 12px;
+      padding: 12px;
+    }
+
+    .place-section {
+      scroll-margin-top: 62px;
+      padding: 15px;
+      border: 1px solid #d8efff;
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: 0 4px 14px rgba(17, 111, 166, 0.08);
+    }
+
+    .place-section-heading {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      margin: 0 0 12px;
+      color: #104786;
+      font-size: 19px;
+      line-height: 1.2;
+    }
+
+    .place-section-heading > span {
+      flex: none;
+      color: #087fe5;
+    }
+
+    .place-section-subtitle {
+      margin: -6px 0 12px 29px;
+      color: #6b86a7;
+      font-size: 12px;
+    }
+
+    .flight-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .flight-field {
+      display: grid;
+      min-width: 0;
+      gap: 4px;
+      padding: 9px 10px;
+      border: 1px solid #d4eaff;
+      border-radius: 12px;
+      color: #55749e;
+      background: #fbfdff;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .flight-field input,
+    .flight-field select {
+      width: 100%;
+      min-width: 0;
+      padding: 2px 0;
+      border: 0;
+      outline: 0;
+      color: #14437c;
+      background: transparent;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .flight-submit,
+    .place-action {
+      display: flex;
+      min-height: 46px;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 15px;
+      border: 0;
+      border-radius: 14px;
+      color: #fff;
+      background: linear-gradient(100deg, #1599f4, #0872df);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .flight-submit {
+      grid-column: 1 / -1;
+      margin-top: 1px;
+    }
+
+    .suggested-flight {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto;
+      align-items: center;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid #d7efff;
+      border-radius: 16px;
+      background: #fbfdff;
+    }
+
+    .suggested-flight strong {
+      display: block;
+      color: #114681;
+      font-size: 14px;
+    }
+
+    .suggested-flight small {
+      color: #6883a5;
+      font-size: 11px;
+    }
+
+    .flight-route {
+      color: #208fe1;
+    }
+
+    .flight-book {
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 0;
+      border-radius: 999px;
+      color: #fff;
+      background: #087fe5;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .itinerary-days {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .itinerary-day {
+      padding: 12px;
+      border: 1px solid #d8efff;
+      border-radius: 15px;
+      background: linear-gradient(150deg, #f7fcff, #eaf7ff);
+    }
+
+    .itinerary-day h3 {
+      margin: 0 0 5px;
+      color: #0e4a8c;
+      font-size: 14px;
+    }
+
+    .itinerary-day p {
+      margin: 0;
+      color: #607fa6;
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .itinerary-add {
+      width: 100%;
+      min-height: 40px;
+      margin-top: 10px;
+      border: 1px dashed #5eafea;
+      border-radius: 12px;
+      color: #0872ca;
+      background: #f3fbff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .activity-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .activity-chip {
+      min-height: 38px;
+      padding: 8px 12px;
+      border: 1px solid #cfe9ff;
+      border-radius: 999px;
+      color: #1760a2;
+      background: #f4fbff;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .activity-chip.is-selected {
+      border-color: #087fe5;
+      color: #fff;
+      background: #087fe5;
+    }
+
+    .place-about-copy {
+      margin: 0;
+      color: #557392;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .place-callout {
+      margin-top: 12px;
+      padding: 12px;
+      border-radius: 14px;
+      color: #15604d;
+      background: #e5f8ee;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .place-bottom-action {
+      padding: 0 12px 16px;
+    }
+
+    .place-bottom-action .place-action {
+      width: 100%;
+      min-height: 48px;
+    }
+
+    #place-plan-status {
+      margin: 8px 0 0;
+      color: #22628e;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    .place-bottom-nav {
+      position: sticky;
+      z-index: 5;
+      bottom: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+      border-top: 1px solid #dcefff;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(12px);
+    }
+
+    .place-bottom-nav button {
+      min-height: 42px;
+      border: 0;
+      border-radius: 12px;
+      color: #50739e;
+      background: transparent;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .place-bottom-nav button.is-active {
+      color: #087fe5;
+      background: #eaf7ff;
+    }
+
+    @media (min-width: 700px) {
+      .place-hero {
+        min-height: 300px;
+        padding: 66px 28px 28px;
+      }
+
+      .place-content {
+        gap: 16px;
+        padding: 16px;
+      }
+
+      .itinerary-days {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    .tips-page {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.18) 0 12%, rgba(255,255,255,0) 12% 100%),
+        linear-gradient(180deg, #6ed2ff 0%, #8ad7ff 26%, #7ecfff 52%, #6cc8ff 100%);
+    }
+
+    .tips-page::before,
+    .tips-page::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      pointer-events: none;
+    }
+
+    .tips-page::before {
+      top: 44px;
+      left: 50%;
+      width: 140%;
+      height: 120px;
+      transform: translateX(-50%);
+      background: radial-gradient(circle at 20% 40%, rgba(255,255,255,0.8) 0 10%, rgba(255,255,255,0.3) 10% 18%, transparent 18%),
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.8) 0 9%, rgba(255,255,255,0.3) 9% 16%, transparent 16%),
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.6) 0 12%, rgba(255,255,255,0.2) 12% 21%, transparent 21%);
+      opacity: 0.8;
+      filter: blur(2px);
+    }
+
+    .tips-page::after {
+      bottom: 0;
+      height: 180px;
+      background:
+        linear-gradient(180deg, rgba(103, 196, 88, 0.2), rgba(85, 170, 85, 0.7)),
+        linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(51, 138, 195, 0.3) 100%);
+      clip-path: ellipse(82% 100% at 50% 100%);
+      opacity: 0.95;
+    }
+
+    .tips-shell {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 560px);
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0 auto;
+      padding: 10px 16px 0;
+      overflow: hidden;
+    }
+
+    .tips-status-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 30px;
+      padding: 0 8px 0 12px;
+      color: #0d3f7e;
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .tips-status-icons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+
+    .tips-signal,
+    .tips-wifi,
+    .tips-battery {
+      display: inline-block;
+      position: relative;
+      vertical-align: middle;
+    }
+
+    .tips-signal {
+      width: 18px;
+      height: 12px;
+      border-radius: 3px 3px 2px 2px;
+      background: linear-gradient(90deg, rgba(0,0,0,0) 0 12%, #0d3f7e 12% 100%);
+      clip-path: polygon(0 100%, 0 20%, 25% 20%, 25% 68%, 40% 68%, 40% 40%, 57% 40%, 57% 56%, 72% 56%, 72% 48%, 88% 48%, 88% 100%);
+    }
+
+    .tips-wifi {
+      width: 14px;
+      height: 14px;
+      border: 2px solid transparent;
+      border-top-color: #0d3f7e;
+      border-left-color: #0d3f7e;
+      border-radius: 50%;
+      transform: rotate(45deg);
+      margin-left: -4px;
+    }
+
+    .tips-battery {
+      width: 18px;
+      height: 11px;
+      border: 2px solid #0d3f7e;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #0d3f7e 0 70%, rgba(13,63,126,0.15) 70% 100%);
+    }
+
+    .tips-battery::after {
+      content: "";
+      position: absolute;
+      right: -4px;
+      top: 2px;
+      width: 2px;
+      height: 5px;
+      border-radius: 1px;
+      background: #0d3f7e;
+    }
+
+    .tips-header {
+      display: grid;
+      grid-template-columns: 56px 1fr 56px;
+      align-items: center;
+      gap: 10px;
+      padding-top: 2px;
+    }
+
+    .tips-back {
+      display: grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.15);
+    }
+
+    .tips-header-spacer {
+      width: 52px;
+      height: 52px;
+    }
+
+    .tips-brand {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      min-width: 0;
+      padding: 4px 6px;
+    }
+
+    .tips-globe {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.38);
+      font-size: 32px;
+    }
+
+    .tips-brand h2 {
+      margin: 0;
+      color: #fff;
+      font-size: clamp(32px, 6vw, 58px);
+      font-weight: 1000;
+      letter-spacing: -0.06em;
+      text-shadow: 0 5px 0 rgba(17, 83, 129, 0.2);
+    }
+
+    .tips-subtitle {
+      margin: 10px 0 16px;
+      text-align: center;
+      color: #0d4c8e;
+      font-size: clamp(19px, 3.6vw, 29px);
+      font-weight: 800;
+      font-style: italic;
+    }
+
+    .tips-filters {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .tip-filter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 54px;
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.82);
+      color: #1d5b90;
+      font-size: clamp(10px, 2.2vw, 16px);
+      font-weight: 900;
+      box-shadow: 0 4px 0 rgba(77, 127, 168, 0.25);
+      cursor: pointer;
+      padding: 6px 8px;
+    }
+
+    .tip-filter span {
+      font-size: 1.02em;
+    }
+
+    .tip-filter.is-selected {
+      background: linear-gradient(180deg, #bff4ad, #8fe38e);
+      border-color: rgba(23, 109, 84, 0.12);
+      color: #0d4c8e;
+    }
+
+    .tips-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 12px 12px 14px;
+      border: 3px solid rgba(255,255,255,0.9);
+      border-radius: 30px;
+      background: rgba(171, 227, 250, 0.32);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.25), 0 8px 0 rgba(52, 128, 178, 0.1);
+    }
+
+    .tip-item {
+      display: grid;
+      grid-template-columns: 74px 1fr 52px;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      min-height: 86px;
+      border: 3px solid rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      background: rgba(210, 242, 255, 0.25);
+      color: #123c7b;
+      box-shadow: 0 4px 0 rgba(93, 146, 196, 0.18);
+      padding: 10px 12px 10px 10px;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .tip-item-icon {
+      display: grid;
+      place-items: center;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.42);
+      font-size: 32px;
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.35);
+    }
+
+    .tip-item-copy {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      gap: 3px;
+    }
+
+    .tip-item-copy strong {
+      font-size: clamp(19px, 4vw, 30px);
+      line-height: 1.15;
+      letter-spacing: -0.05em;
+      color: #0f3d7b;
+      font-weight: 900;
+    }
+
+    .tip-item-copy span {
+      font-size: clamp(12px, 2.6vw, 16px);
+      color: #214a85;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+
+    .tip-item-arrow {
+      display: grid;
+      place-items: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.7);
+      color: #1a5b9d;
+      font-size: 28px;
+      font-weight: 900;
+      margin-left: auto;
+    }
+
+    .tips-detail {
+      display: none;
+      background: rgba(214, 244, 255, 0.92);
+      border-radius: 28px;
+      border: 3px solid rgba(255, 255, 255, 0.85);
+      box-shadow: 0 4px 0 rgba(93, 146, 196, 0.18);
+      padding: 18px 14px 16px;
+      margin-top: 6px;
+    }
+
+    .tips-detail.is-visible {
+      display: block;
+    }
+
+    .tips-detail-back {
+      border: 0;
+      background: transparent;
+      color: #1d5b90;
+      font-size: 18px;
+      font-weight: 900;
+      margin-bottom: 10px;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    .tips-detail-card {
+      display: grid;
+      gap: 12px;
+    }
+
+    .tips-detail-icon {
+      display: grid;
+      place-items: center;
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      font-size: 40px;
+      margin: 0 auto;
+    }
+
+    .tips-detail h3 {
+      margin: 0;
+      color: #183d7a;
+      font-size: clamp(26px, 5vw, 36px);
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .tips-detail p {
+      margin: 0;
+      color: #214a85;
+      font-size: clamp(14px, 3vw, 18px);
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .tips-quiz-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      width: 100%;
+      min-height: 62px;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #46bdf4, #1b86ea);
+      color: #fff;
+      padding: 12px 18px;
+      box-shadow: 0 5px 0 rgba(10, 80, 136, 0.24);
+      font-size: clamp(18px, 3vw, 22px);
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .tips-quiz-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      font-size: 18px;
+    }
+
+    .tips-quiz-arrow {
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .tips-bottom-nav {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      align-items: center;
+      gap: 6px;
+      padding: 8px 10px 0;
+      margin-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.4);
+    }
+
+    .tips-bottom-nav button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      border: 0;
+      background: transparent;
+      color: #245b91;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      padding: 8px 4px;
+    }
+
+    .tips-bottom-nav button span {
+      font-size: 11px;
+      color: #255b94;
+    }
+
+    .tips-bottom-nav button.is-active {
+      color: #0b70d1;
+    }
+
+    .tips-bottom-nav button.is-active span {
+      color: #0b70d1;
+    }
+
+    .quiz-page {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      min-height: 100dvh;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.18) 0 12%, rgba(255,255,255,0) 12% 100%),
+        linear-gradient(180deg, #6ed2ff 0%, #8ad7ff 26%, #7ecfff 52%, #6cc8ff 100%);
+      padding: 0;
+    }
+
+    .quiz-poster {
+      position: relative;
+      width: min(100%, 430px);
+      height: 100vh;
+      height: 100dvh;
+      margin: 0 auto;
+      flex: none;
+      overflow: hidden;
+      background: transparent;
+      padding: 12px 16px 0;
+    }
+
+    .quiz-poster::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 120px;
+      background: radial-gradient(circle at 20% 40%, rgba(255,255,255,0.8) 0 10%, rgba(255,255,255,0.3) 10% 18%, transparent 18%),
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.8) 0 9%, rgba(255,255,255,0.3) 9% 16%, transparent 16%),
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.6) 0 12%, rgba(255,255,255,0.2) 12% 21%, transparent 21%);
+      opacity: 0.8;
+      filter: blur(2px);
+      pointer-events: none;
+    }
+
+    .quiz-poster > img {
+      display: none;
+    }
+
+    .quiz-header-button {
+      display: none;
+    }
+
+    .quiz-card {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 390px);
+      margin: 16px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(10px, 1.7vh, 18px);
+      padding: clamp(14px, 2.6vw, 20px) clamp(14px, 2.5vw, 18px) clamp(12px, 2.6vw, 16px);
+      border: 0;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 16px 32px rgba(10, 80, 120, 0.15);
+      text-align: left;
+      backdrop-filter: blur(2px);
+    }
+
+    .quiz-progress {
+      display: block;
+      flex: none;
+      margin: 0;
+      color: #0d5fbf;
+      font-size: clamp(11px, 2.8vw, 16px);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .quiz-card h1 {
+      flex: none;
+      margin: 0;
+      color: #1d5ca9;
+      font-size: clamp(22px, 5vw, 34px);
+      line-height: 1.08;
+      font-weight: 1000;
+      letter-spacing: -0.04em;
+      text-shadow: none;
+    }
+
+    .quiz-prompt {
+      display: none;
+      flex: none;
+      margin: 0;
+      color: #3e6fa8;
+      font-size: clamp(14px, 3.2vw, 18px);
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .quiz-answers {
+      display: grid;
+      flex: 1;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: clamp(10px, 2vw, 18px);
+      min-height: 0;
+      margin-top: 4px;
+    }
+
+    .quiz-answer {
+      display: flex;
+      min-height: 0;
+      align-items: stretch;
+      justify-content: flex-start;
+      gap: 12px;
+      padding: 12px 14px 12px 12px;
+      border: 0;
+      border-radius: 18px;
+      color: #fff;
+      background: linear-gradient(135deg, #3da4ff, #2b7de9);
+      font-size: clamp(12px, 3vw, 18px);
+      font-weight: 900;
+      line-height: 1.2;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 4px 0 rgba(8, 33, 73, 0.18), inset 0 0 0 2px rgba(255,255,255,0.12);
+      transition: transform 120ms ease, box-shadow 120ms ease, filter 120ms ease;
+    }
+
+    .quiz-answer:nth-child(2) { background: linear-gradient(135deg, #ff7a59, #e85d46); }
+    .quiz-answer:nth-child(3) { background: linear-gradient(135deg, #33c27b, #1ba961); }
+    .quiz-answer:nth-child(4) { background: linear-gradient(135deg, #ffc13d, #f59f00); }
+
+    .quiz-answer:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 7px 0 rgba(8, 33, 73, 0.18), inset 0 0 0 2px rgba(255,255,255,0.18);
+    }
+
+    .quiz-answer:focus-visible,
+    .quiz-next:focus-visible,
+    .quiz-header-button:focus-visible {
+      outline: 3px solid #ffbf36;
+      outline-offset: 2px;
+    }
+
+    .quiz-answer-text {
+      display: flex;
+      flex: 1;
+      gap: 12px;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .quiz-answer-letter {
+      display: grid;
+      width: clamp(34px, 7vw, 46px);
+      height: clamp(34px, 7vw, 46px);
+      flex: none;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+      box-shadow: inset 0 0 0 2px rgba(255,255,255,0.12);
+      color: #fff;
+      font-size: clamp(18px, 4vw, 26px);
+      font-weight: 900;
+    }
+
+    .quiz-answer-text span:last-child {
+      display: block;
+      min-width: 0;
+      color: #fff;
+      text-wrap: balance;
+    }
+
+    .quiz-answer.is-wrong {
+      border: 0;
+      color: #fff;
+      background: linear-gradient(135deg, #ef6a4a, #d94733);
+      box-shadow: 0 5px 0 rgba(88, 29, 20, 0.3), inset 0 0 0 2px rgba(255,255,255,0.12);
+    }
+
+    .quiz-answer.is-wrong .quiz-answer-letter {
+      background: rgba(255,255,255,0.14);
+    }
+
+    .quiz-answer.is-correct {
+      border: 0;
+      color: #fff;
+      background: linear-gradient(135deg, #6ad15d, #38b44a);
+      box-shadow: 0 5px 0 rgba(14, 82, 38, 0.22), inset 0 0 0 2px rgba(255,255,255,0.12);
+    }
+
+    .quiz-answer.is-correct .quiz-answer-letter {
+      color: #fff;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .quiz-feedback {
+      display: flex;
+      min-height: clamp(80px, 13vh, 130px);
+      flex: none;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 18px;
+      color: #fff;
+      background: linear-gradient(110deg, rgba(32, 202, 133, 0.95), rgba(15, 129, 98, 0.9));
+      text-align: left;
+      box-shadow: inset 0 0 0 3px rgba(255,255,255,0.15);
+    }
+
+    .quiz-feedback[hidden] {
+      display: none;
+    }
+
+    .quiz-feedback-icon {
+      flex: none;
+      font-size: clamp(24px, 7vw, 42px);
+    }
+
+    .quiz-feedback-copy {
+      min-width: 0;
+    }
+
+    .quiz-feedback h2 {
+      margin: 0 0 2px;
+      font-size: clamp(17px, 4.3vw, 24px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    .quiz-feedback p {
+      margin: 0;
+      font-size: clamp(12px, 2.9vw, 16px);
+      line-height: 1.2;
+      font-weight: 700;
+    }
+
+    .quiz-score {
+      flex: none;
+      margin: 0;
+      color: #0d5fbf;
+      font-size: clamp(18px, 4.2vw, 28px);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .quiz-next {
+      width: min(72%, 380px);
+      min-height: clamp(50px, 8vh, 68px);
+      flex: none;
+      align-self: center;
+      border: 0;
+      border-radius: 18px;
+      color: #fff;
+      background: linear-gradient(100deg, #ffc43b, #ff9330);
+      box-shadow: 0 6px 0 rgba(160, 96, 4, 0.28);
+      font-size: clamp(20px, 5vw, 30px);
+      font-weight: 1000;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .quiz-next:disabled {
+      opacity: 0.52;
+      cursor: not-allowed;
+      filter: grayscale(0.35);
+    }
+
+    @media (max-height: 740px) {
+      .quiz-card {
+        inset: 8% 4% 2%;
+        gap: 4px;
+        padding: 9px 12px;
+      }
+
+      .quiz-progress {
+        font-size: 12px;
+      }
+
+      .quiz-card h1 {
+        font-size: clamp(17px, 4vw, 25px);
+      }
+
+      .quiz-prompt {
+        font-size: clamp(12px, 2.8vw, 16px);
+      }
+
+      .quiz-answers {
+        gap: 5px;
+      }
+
+      .quiz-answer {
+        font-size: clamp(11px, 3vw, 16px);
+      }
+
+      .quiz-feedback {
+        min-height: 54px;
+      }
+
+      .quiz-feedback p {
+        font-size: 11px;
+      }
+
+      .quiz-next {
+        min-height: 40px;
+      }
+    }
+
+    #dialog-actions {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      max-height: 45dvh;
+      overflow-y: auto;
+    }
+
+    #dialog-actions:empty {
+      display: none;
+    }
+
+    .dialog-action {
+      min-height: 42px;
+      padding: 8px 14px;
+      border: 1px solid #a5dcff;
+      border-radius: 10px;
+      color: #0759b5;
+      background: #eff9ff;
+      font-weight: 800;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    dialog {
+      width: min(90vw, 400px);
+      max-height: 85dvh;
+      overflow-y: auto;
+      padding: 28px;
+      border: 4px solid #fff;
+      border-radius: 22px;
+      color: #123b79;
+      background: #fff;
+      box-shadow: 0 12px 40px #123b7955;
+    }
+
+    dialog::backdrop {
+      background: #123b7977;
+      backdrop-filter: blur(3px);
+    }
+
+    dialog h2 {
+      margin: 0 0 10px;
+    }
+
+    dialog p {
+      line-height: 1.5;
+      white-space: pre-line;
+    }
+
+    .dialog-close {
+      min-height: 42px;
+      padding: 8px 18px;
+      border: 0;
+      border-radius: 10px;
+      background: #0960c7;
+      color: #fff;
+      font-weight: 800;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="page landing is-active" id="home" aria-label="Pocket World home">
+      <div class="poster">
+        <img class="poster-image" src="home-screen.png" alt="">
+        <button class="hotspot hotspot-menu" type="button" aria-label="Open menu" data-panel="menu">Menu</button>
+        <button class="hotspot hotspot-explore" type="button" aria-label="Explore" data-panel="explore">Explore</button>
+        <button class="hotspot hotspot-learn" type="button" aria-label="Learn" data-panel="learn">Learn</button>
+        <button class="hotspot hotspot-travel" type="button" aria-label="Travel" data-panel="travel">Travel</button>
+        <button class="hotspot hotspot-difference" type="button" aria-label="Make a Difference" data-panel="difference">Make a Difference</button>
+        <a class="hotspot hotspot-start" href="#login" aria-label="Start Exploring">Start Exploring</a>
+        <button class="hotspot hotspot-about" type="button" aria-label="About the App" data-panel="about">About the App</button>
+      </div>
+    </section>
+
+    <section class="page auth-page" id="login" aria-label="Log in" aria-hidden="true">
+      <div class="auth-poster">
+        <img src="login-screen.png" alt="">
+        <form id="login-form" autocomplete="on">
+          <label class="auth-input login-identity">
+            <input name="identity" type="text" autocomplete="username" placeholder="Email or Username" aria-label="Email or Username" required>
+          </label>
+          <label class="auth-input login-password">
+            <input name="password" type="password" autocomplete="current-password" placeholder="Password" aria-label="Password" required>
+            <button class="password-toggle" type="button" data-toggle-password aria-label="Show password">◉</button>
+          </label>
+          <button class="auth-submit login-submit" type="submit" aria-label="Log in">Log In</button>
+        </form>
+        <a class="auth-switch login-switch" href="#signup" aria-label="Sign up">Sign Up</a>
+        <p class="auth-notice" id="login-notice" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="page auth-page" id="signup" aria-label="Create account" aria-hidden="true">
+      <div class="auth-poster">
+        <img src="signup-screen.png" alt="">
+        <form id="signup-form" autocomplete="on">
+          <label class="auth-input signup-name">
+            <input name="name" type="text" autocomplete="name" placeholder="Full Name" aria-label="Full Name" required>
+          </label>
+          <label class="auth-input signup-identity">
+            <input name="identity" type="text" autocomplete="username" placeholder="Email or Username" aria-label="Email or Username" required>
+          </label>
+          <label class="auth-input signup-password">
+            <input name="password" type="password" autocomplete="new-password" placeholder="Password" aria-label="Password" minlength="8" required>
+            <button class="password-toggle" type="button" data-toggle-password aria-label="Show password">◉</button>
+          </label>
+          <label class="auth-input signup-confirm">
+            <input name="confirmPassword" type="password" autocomplete="new-password" placeholder="Confirm Password" aria-label="Confirm Password" minlength="8" required>
+            <button class="password-toggle" type="button" data-toggle-password aria-label="Show confirm password">◉</button>
+          </label>
+          <button class="auth-submit signup-submit" type="submit" aria-label="Sign up">Sign Up</button>
+        </form>
+        <a class="auth-switch signup-switch" href="#login" aria-label="Log in">Log In</a>
+        <p class="auth-notice" id="signup-notice" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="page destination-page" id="destinations" aria-label="Travel destinations" aria-hidden="true">
+      <div class="destination-poster">
+        <img src="destinations-screen.png" alt="">
+        <button class="destination-control destination-menu" type="button" data-destination-action="menu" aria-label="Open menu">Menu</button>
+        <button class="destination-control destination-favorites" type="button" data-destination-action="favorites" aria-label="Show saved destinations">Favorites</button>
+        <input class="destination-search" type="search" placeholder="Search destination..." aria-label="Search destinations">
+        <button class="destination-control destination-filter" type="button" data-destination-action="filters" aria-label="Open filters">Filters</button>
+        <button class="destination-control destination-category category-all is-selected" type="button" data-category="All" aria-label="Show all destinations">All</button>
+        <button class="destination-control destination-category category-beach" type="button" data-category="Beach" aria-label="Filter beaches">Beach</button>
+        <button class="destination-control destination-category category-mountains" type="button" data-category="Mountains" aria-label="Filter mountains">Mountains</button>
+        <button class="destination-control destination-category category-cities" type="button" data-category="Cities" aria-label="Filter cities">Cities</button>
+        <button class="destination-control destination-category category-nature" type="button" data-category="Nature" aria-label="Filter nature">Nature</button>
+
+        <button class="destination-control destination-card-area card-1" type="button" data-destination="Sandy Beach" aria-label="View Sandy Beach details"></button>
+        <button class="destination-control destination-card-area card-2" type="button" data-destination="Mount Mayon" aria-label="View Mount Mayon details"></button>
+        <button class="destination-control destination-card-area card-3" type="button" data-destination="Vigan Heritage City" aria-label="View Vigan Heritage City details"></button>
+        <button class="destination-control destination-card-area card-4" type="button" data-destination="Manila" aria-label="View Manila details"></button>
+        <button class="destination-control destination-card-area card-5" type="button" data-destination="El Nido" aria-label="View El Nido details"></button>
+        <button class="destination-control destination-card-area card-6" type="button" data-destination="Taal Volcano" aria-label="View Taal Volcano details"></button>
+        <button class="destination-control destination-card-area card-7" type="button" data-destination="Siargao" aria-label="View Siargao details"></button>
+        <button class="destination-control destination-card-area card-8" type="button" data-destination="Chocolate Hills" aria-label="View Chocolate Hills details"></button>
+        <button class="destination-control destination-card-area card-9" type="button" data-destination="Lake Taal (Crater)" aria-label="View Lake Taal Crater details"></button>
+        <button class="destination-control destination-card-area card-10" type="button" data-destination="Dumaluan Beach" aria-label="View Dumaluan Beach details"></button>
+
+        <button class="destination-control destination-favorite favorite-1" type="button" data-favorite="Sandy Beach" aria-label="Save Sandy Beach to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-2" type="button" data-favorite="Mount Mayon" aria-label="Save Mount Mayon to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-3" type="button" data-favorite="Vigan Heritage City" aria-label="Save Vigan Heritage City to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-4" type="button" data-favorite="Manila" aria-label="Save Manila to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-5" type="button" data-favorite="El Nido" aria-label="Save El Nido to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-6" type="button" data-favorite="Taal Volcano" aria-label="Save Taal Volcano to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-7" type="button" data-favorite="Siargao" aria-label="Save Siargao to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-8" type="button" data-favorite="Chocolate Hills" aria-label="Save Chocolate Hills to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-9" type="button" data-favorite="Lake Taal (Crater)" aria-label="Save Lake Taal Crater to favorites">♥</button>
+        <button class="destination-control destination-favorite favorite-10" type="button" data-favorite="Dumaluan Beach" aria-label="Save Dumaluan Beach to favorites">♥</button>
+
+        <button class="destination-control destination-open open-1" type="button" data-destination="Sandy Beach" aria-label="Open Sandy Beach"></button>
+        <button class="destination-control destination-open open-2" type="button" data-destination="Mount Mayon" aria-label="Open Mount Mayon"></button>
+        <button class="destination-control destination-open open-3" type="button" data-destination="Vigan Heritage City" aria-label="Open Vigan Heritage City"></button>
+        <button class="destination-control destination-open open-4" type="button" data-destination="Manila" aria-label="Open Manila"></button>
+        <button class="destination-control destination-open open-5" type="button" data-destination="El Nido" aria-label="Open El Nido"></button>
+        <button class="destination-control destination-open open-6" type="button" data-destination="Taal Volcano" aria-label="Open Taal Volcano"></button>
+        <button class="destination-control destination-open open-7" type="button" data-destination="Siargao" aria-label="Open Siargao"></button>
+        <button class="destination-control destination-open open-8" type="button" data-destination="Chocolate Hills" aria-label="Open Chocolate Hills"></button>
+        <button class="destination-control destination-open open-9" type="button" data-destination="Lake Taal (Crater)" aria-label="Open Lake Taal Crater"></button>
+        <button class="destination-control destination-open open-10" type="button" data-destination="Dumaluan Beach" aria-label="Open Dumaluan Beach"></button>
+
+        <button class="destination-control more-destinations" type="button" data-destination-action="more" aria-label="Show more destinations">More Destinations</button>
+        <button class="destination-control bottom-tab tab-tips" type="button" data-destination-action="tips" aria-label="Travel tips">Travel Tips</button>
+        <button class="destination-control bottom-tab tab-destinations" type="button" data-destination-action="destinations" aria-label="Destinations">Destinations</button>
+        <button class="destination-control bottom-tab tab-profile" type="button" data-destination-action="profile" aria-label="Profile">Profile</button>
+        <p class="destination-notice" id="destination-notice" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <section class="page place-page" id="place" aria-label="Destination planner" aria-hidden="true">
+      <div class="place-shell">
+        <header class="place-hero" id="place-hero">
+          <div class="place-topbar">
+            <button class="place-icon-button" id="place-back" type="button" aria-label="Back to destinations">←</button>
+            <div class="place-top-actions">
+              <button class="place-icon-button" id="place-share" type="button" aria-label="Share destination">↗</button>
+              <button class="place-icon-button" id="place-favorite" type="button" aria-label="Save destination to favorites">♡</button>
+            </div>
+          </div>
+          <p class="place-category" id="place-category"></p>
+          <h1 id="place-name"></h1>
+          <p class="place-location" id="place-location"></p>
+          <p class="place-rating" id="place-rating"></p>
+          <p class="place-tagline">Your next thoughtful getaway starts here.</p>
+        </header>
+        <nav class="place-tabs" aria-label="Destination planner sections">
+          <button type="button" class="is-active" data-place-tab="flights">Flights</button>
+          <button type="button" data-place-tab="plan">Plan Your Trip</button>
+          <button type="button" data-place-tab="activities">Things to Do</button>
+          <button type="button" data-place-tab="about">About</button>
+        </nav>
+        <div class="place-content">
+          <section class="place-section" id="place-flights" data-place-section="flights">
+            <h2 class="place-section-heading"><span aria-hidden="true">✈</span>Find a flight</h2>
+            <p class="place-section-subtitle">Example trip details — booking is not connected.</p>
+            <form class="flight-form" id="flight-form">
+              <label class="flight-field">From
+                <input name="from" value="Manila" autocomplete="off" required>
+              </label>
+              <label class="flight-field">To
+                <input name="to" id="flight-destination" readonly>
+              </label>
+              <label class="flight-field">Departure
+                <input name="departure" type="date" required>
+              </label>
+              <label class="flight-field">Travelers
+                <select name="travelers">
+                  <option value="1">1 traveler</option>
+                  <option value="2">2 travelers</option>
+                  <option value="3">3 travelers</option>
+                  <option value="4">4 travelers</option>
+                </select>
+              </label>
+              <button class="flight-submit" type="submit">Search sample flights</button>
+            </form>
+            <div id="flight-results" aria-live="polite"></div>
+          </section>
+          <section class="place-section" id="place-plan" data-place-section="plan">
+            <h2 class="place-section-heading"><span aria-hidden="true">▣</span>Plan your trip</h2>
+            <p class="place-section-subtitle">Tap a day to add or remove it from your saved trip.</p>
+            <div class="itinerary-days" id="place-itinerary"></div>
+          </section>
+          <section class="place-section" id="place-activities" data-place-section="activities">
+            <h2 class="place-section-heading"><span aria-hidden="true">✦</span>Things to do</h2>
+            <p class="place-section-subtitle">Choose experiences to keep in your trip plan.</p>
+            <div class="activity-list" id="place-activities-list"></div>
+          </section>
+          <section class="place-section" id="place-about" data-place-section="about">
+            <h2 class="place-section-heading"><span aria-hidden="true">⌖</span>About this place</h2>
+            <p class="place-about-copy" id="place-description"></p>
+            <div class="place-callout">Travel thoughtfully: follow local guidance, respect community customs, and leave the place as beautiful as you found it.</div>
+          </section>
+        </div>
+        <div class="place-bottom-action">
+          <button class="place-action" id="place-plan-button" type="button">＋ Add to my trip</button>
+          <p id="place-plan-status" role="status" aria-live="polite"></p>
+        </div>
+        <nav class="place-bottom-nav" aria-label="App navigation">
+          <button type="button" data-place-nav="destinations">⌂ Destinations</button>
+          <button type="button" class="is-active" data-place-nav="trip">♡ My Trip</button>
+          <button type="button" data-place-nav="tips">✦ Travel Tips</button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="page tips-page" id="tips" aria-label="Travel tips" aria-hidden="true">
+      <div class="tips-shell">
+        <div class="tips-status-bar" aria-hidden="true">
+          <span>12:33</span>
+          <div class="tips-status-icons">
+            <span class="tips-signal"></span>
+            <span class="tips-wifi"></span>
+            <span class="tips-battery"></span>
+          </div>
+        </div>
+        <div class="tips-header">
+          <button class="tips-back" type="button" aria-label="Back to destinations">←</button>
+          <div class="tips-brand" aria-label="Travel tips logo">
+            <span class="tips-globe" aria-hidden="true">🌍</span>
+            <h2>TRAVEL TIPS</h2>
+          </div>
+          <div class="tips-header-spacer" aria-hidden="true"></div>
+        </div>
+        <p class="tips-subtitle">Small actions make a big impact!</p>
+
+        <div class="tips-filters" aria-label="Travel tip categories">
+          <button class="tip-filter is-selected" type="button" data-tip-filter="All"><span aria-hidden="true">🌿</span>All</button>
+          <button class="tip-filter" type="button" data-tip-filter="Nature"><span aria-hidden="true">🌱</span>Nature</button>
+          <button class="tip-filter" type="button" data-tip-filter="Culture"><span aria-hidden="true">🏛️</span>Culture</button>
+          <button class="tip-filter" type="button" data-tip-filter="Community"><span aria-hidden="true">👥</span>Community</button>
+          <button class="tip-filter" type="button" data-tip-filter="Travel"><span aria-hidden="true">✈️</span>Travel</button>
+        </div>
+
+        <div class="tips-list" id="tips-list" aria-live="polite"></div>
+        <div class="tips-detail" id="tips-detail" hidden></div>
+
+        <button class="tips-quiz-button" id="tips-quiz-button" type="button">
+          <span class="tips-quiz-icon" aria-hidden="true">⟡</span>
+          <span>Responsible or Irresponsible?</span>
+          <span class="tips-quiz-arrow" aria-hidden="true">→</span>
+        </button>
+
+        <nav class="tips-bottom-nav" aria-label="Main navigation">
+          <button type="button" data-main-nav="home">🏠<span>Home</span></button>
+          <button type="button" data-main-nav="destinations">📍<span>Destinations</span></button>
+          <button type="button" data-main-nav="tips" class="is-active">💡<span>Travel Tips</span></button>
+          <button type="button" data-main-nav="profile">👤<span>Profile</span></button>
+        </nav>
+      </div>
+    </section>
+
+    <section class="page quiz-page" id="quiz" aria-label="Responsible travel quiz" aria-hidden="true">
+      <div class="quiz-poster">
+        <img id="quiz-background" src="quiz-beach.png" alt="">
+        <article class="quiz-card" aria-labelledby="quiz-title">
+          <p class="quiz-progress" id="quiz-progress"></p>
+          <h1 id="quiz-title"></h1>
+          <p class="quiz-prompt" id="quiz-prompt"></p>
+          <div class="quiz-answers" id="quiz-answers"></div>
+          <section class="quiz-feedback" id="quiz-feedback" aria-live="polite" hidden>
+            <span class="quiz-feedback-icon" id="quiz-feedback-icon" aria-hidden="true"></span>
+            <div class="quiz-feedback-copy">
+              <h2 id="quiz-feedback-title"></h2>
+              <p id="quiz-feedback-copy"></p>
+            </div>
+          </section>
+          <p class="quiz-score" id="quiz-score"></p>
+          <button class="quiz-next" id="quiz-next" type="button" disabled>Next →</button>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <dialog id="info-dialog" aria-labelledby="dialog-title">
+    <h2 id="dialog-title"></h2>
+    <p id="dialog-copy"></p>
+    <div id="dialog-actions"></div>
+    <button class="dialog-close" type="button">Close</button>
+  </dialog>
+
+  <script>
+    const homePage = document.querySelector("#home");
+    const loginPage = document.querySelector("#login");
+    const signupPage = document.querySelector("#signup");
+    const destinationsPage = document.querySelector("#destinations");
+    const placePage = document.querySelector("#place");
+    const tipsPage = document.querySelector("#tips");
+    const quizPage = document.querySelector("#quiz");
+    const tipsList = document.querySelector("#tips-list");
+    const tipsDetail = document.querySelector("#tips-detail");
+    const tipsQuizButton = document.querySelector("#tips-quiz-button");
+    const tipsBackButton = document.querySelector(".tips-back");
+    const placeHero = document.querySelector("#place-hero");
+    const placeCategory = document.querySelector("#place-category");
+    const placeName = document.querySelector("#place-name");
+    const placeLocation = document.querySelector("#place-location");
+    const placeRating = document.querySelector("#place-rating");
+    const placeDescription = document.querySelector("#place-description");
+    const flightDestination = document.querySelector("#flight-destination");
+    const flightForm = document.querySelector("#flight-form");
+    const flightResults = document.querySelector("#flight-results");
+    const placeItinerary = document.querySelector("#place-itinerary");
+    const placeActivities = document.querySelector("#place-activities-list");
+    const placeFavoriteButton = document.querySelector("#place-favorite");
+    const placePlanButton = document.querySelector("#place-plan-button");
+    const placePlanStatus = document.querySelector("#place-plan-status");
+    const loginForm = document.querySelector("#login-form");
+    const signupForm = document.querySelector("#signup-form");
+    const infoDialog = document.querySelector("#info-dialog");
+    const dialogTitle = document.querySelector("#dialog-title");
+    const dialogCopy = document.querySelector("#dialog-copy");
+    const dialogActions = document.querySelector("#dialog-actions");
+    const destinationSearch = document.querySelector(".destination-search");
+    const destinationNotice = document.querySelector("#destination-notice");
+    const quizBackground = document.querySelector("#quiz-background");
+    const quizProgress = document.querySelector("#quiz-progress");
+    const quizTitle = document.querySelector("#quiz-title");
+    const quizPrompt = document.querySelector("#quiz-prompt");
+    const quizAnswers = document.querySelector("#quiz-answers");
+    const quizFeedback = document.querySelector("#quiz-feedback");
+    const quizFeedbackIcon = document.querySelector("#quiz-feedback-icon");
+    const quizFeedbackTitle = document.querySelector("#quiz-feedback-title");
+    const quizFeedbackCopy = document.querySelector("#quiz-feedback-copy");
+    const quizScoreElement = document.querySelector("#quiz-score");
+    const quizNextButton = document.querySelector("#quiz-next");
+    const accountsStorageKey = "pocket-world.accounts.v1";
+    const favoritesStorageKey = "pocket-world.favorites.v1";
+    const tripPlansStorageKey = "pocket-world.trip-plans.v1";
+    const activeAccountKey = "pocket-world.active-account";
+    const accountNotice = {
+      login: document.querySelector("#login-notice"),
+      signup: document.querySelector("#signup-notice")
+    };
+    const panelContent = {
+      menu: ["Pocket World menu", "Choose Explore, Learn, Travel, or Make a Difference on the home screen to discover more."],
+      explore: ["Explore", "Discover destinations and plan a thoughtful journey around the world."],
+      learn: ["Learn", "Learn how tourism, culture, and sustainability connect."],
+      travel: ["Travel", "Find inspiration for more responsible travel."],
+      difference: ["Make a Difference", "Small, mindful choices can help make travel better for local communities and the planet."],
+      about: ["About Pocket World", "Explore, learn, and travel responsibly. Pocket World brings tourism, values, and technology together."]
+    };
+    const destinations = [
+      { name: "Sandy Beach", category: "Beach", location: "Boracay, Aklan", rating: "4.8", reviews: "2.4k", description: "A tropical shoreline with clear water, palm trees, and space to enjoy a slower island day.", activities: ["Swim at the beach", "Watch the sunset", "Try local seafood"], itinerary: [["Arrive & unwind", "Settle in and enjoy a quiet shoreline walk."], ["Island day", "Swim, explore nearby shores, and watch sunset."]] },
+      { name: "Mount Mayon", category: "Mountains", location: "Albay", rating: "4.7", reviews: "1.8k", description: "See the iconic volcano and explore the surrounding Albay countryside responsibly.", activities: ["Visit a viewpoint", "Explore Albay", "Try Bicolano food"], itinerary: [["Explore Albay", "Visit a local museum and enjoy regional food."], ["Mayon views", "Choose an open viewpoint and follow local safety advice."]] },
+      { name: "Vigan Heritage City", category: "Cities", location: "Ilocos Sur", rating: "4.6", reviews: "1.2k", description: "Explore historic streets, architecture, local crafts, and Ilocano food.", activities: ["Walk the heritage streets", "Visit local museums", "Shop for local crafts"], itinerary: [["Heritage walk", "Explore historic streets respectfully on foot."], ["Culture & cuisine", "Visit a museum and support local makers."]] },
+      { name: "Manila", category: "Cities", location: "Metro Manila", rating: "4.5", reviews: "1.3k", description: "Discover the capital's museums, historic sites, neighborhoods, and city life.", activities: ["Visit Intramuros", "Explore a museum", "Try a neighborhood food tour"], itinerary: [["Historic Manila", "Discover Intramuros and nearby heritage sites."], ["City culture", "Choose a museum and explore a local neighborhood."]] },
+      { name: "El Nido", category: "Beach", location: "Palawan", rating: "4.9", reviews: "1.1k", description: "Visit dramatic limestone islands and lagoons while following local conservation guidance.", activities: ["Join a guided boat tour", "Kayak a lagoon", "Relax by the shore"], itinerary: [["Town & coast", "Settle in and learn local marine-area guidelines."], ["Island exploration", "Choose a responsible local-guided lagoon trip."]] },
+      { name: "Taal Volcano", category: "Nature", location: "Batangas", rating: "4.7", reviews: "1.6k", description: "Enjoy views of the Taal landscape and check local safety guidance before traveling.", activities: ["See a lake viewpoint", "Visit a local town", "Try Batangas coffee"], itinerary: [["Lakeside visit", "Explore a nearby town and enjoy a scenic viewpoint."], ["Local discoveries", "Visit a community attraction and check current advisories."]] },
+      { name: "Siargao", category: "Beach", location: "Surigao del Norte", rating: "4.8", reviews: "1.9k", description: "An island destination known for surf, lagoons, and relaxed coastal communities.", activities: ["Try a surf lesson", "Visit Magpupungko", "Explore the island by land"], itinerary: [["Island welcome", "Explore General Luna and enjoy a local meal."], ["Coastal day", "Choose a local-guided surf or lagoon experience."]] },
+      { name: "Chocolate Hills", category: "Nature", location: "Bohol", rating: "4.6", reviews: "1.4k", description: "Take in Bohol's remarkable rolling hills and nearby community attractions.", activities: ["Visit a hill viewpoint", "Explore Bohol countryside", "Meet local makers"], itinerary: [["Bohol countryside", "Explore nearby community attractions at a relaxed pace."], ["Hill views", "Visit an authorized viewpoint and follow site guidance."]] },
+      { name: "Lake Taal (Crater)", category: "Mountains", location: "Batangas", rating: "4.7", reviews: "1.2k", description: "A scenic volcanic landscape. Check current access and safety notices before a visit.", activities: ["View the lake landscape", "Visit a local market", "Explore a nearby heritage site"], itinerary: [["Check & prepare", "Review current safety notices and visitor access."], ["Scenic Batangas", "Enjoy an open viewpoint and support nearby businesses."]] },
+      { name: "Dumaluan Beach", category: "Beach", location: "Panglao, Bohol", rating: "4.6", reviews: "1.1k", description: "Enjoy a peaceful Bohol beach and support the local businesses that care for it.", activities: ["Swim in clear water", "Take a beach walk", "Try Boholano dishes"], itinerary: [["Beach arrival", "Settle in and take a gentle walk along the shore."], ["Island day", "Swim, enjoy a local meal, and leave the beach clean."]] }
+    ];
+    const categoryAliases = {
+      All: null,
+      Beach: ["Beach"],
+      Mountains: ["Mountains"],
+      Cities: ["Cities"],
+      Nature: ["Nature"]
+    };
+    let selectedCategory = "All";
+    let currentDestination = null;
+    let currentQuizIndex = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+    let selectedTipFilter = "All";
+    let activeTip = null;
+    const quizQuestions = [
+      {
+        image: "quiz-beach.png",
+        title: "Before visiting a tourist destination, what should you do?",
+        prompt: "Planning a trip can make your visit safer and more respectful. What is the best first step?",
+        choices: [
+          "Ignore the local rules.",
+          "Research the destination and its guidelines.",
+          "Bring unnecessary items.",
+          "Visit without planning."
+        ],
+        correctIndex: 1,
+        explanation: "Researching a destination and checking its local guidelines helps you travel responsibly and avoid harmful mistakes."
+      },
+      {
+        image: "quiz-community.png",
+        title: "What should you do with your trash while traveling?",
+        prompt: "You’ve finished a beach visit and want to leave the area clean for others. What is the responsible choice?",
+        choices: [
+          "Throw it into the ocean.",
+          "Leave it on the beach.",
+          "Hide it under the sand.",
+          "Put it in the proper trash bin."
+        ],
+        correctIndex: 3,
+        explanation: "Proper waste disposal keeps beaches, parks, and communities clean and safe for everyone."
+      },
+      {
+        image: "quiz-responsible.png",
+        title: "How should you behave when visiting a cultural or religious site?",
+        prompt: "You are entering a place with local traditions and rules. What is the best behavior?",
+        choices: [
+          "Respect local traditions and dress appropriately.",
+          "Make loud noises.",
+          "Touch historical objects.",
+          "Ignore the site's rules."
+        ],
+        correctIndex: 0,
+        explanation: "Respecting local customs, dress codes, and rules shows appreciation and helps protect cultural heritage."
+      },
+      {
+        image: "quiz-beach.png",
+        title: "What should you do before taking someone's photograph?",
+        prompt: "You want to take a photo of a local resident or community. What should you do first?",
+        choices: [
+          "Take the picture secretly.",
+          "Use your camera immediately.",
+          "Ask for their permission first.",
+          "Share their picture without asking."
+        ],
+        correctIndex: 2,
+        explanation: "Asking permission before photographing someone respects their privacy and builds trust with the local community."
+      },
+      {
+        image: "quiz-community.png",
+        title: "How can you support local communities when traveling?",
+        prompt: "You want to make a positive impact on the area you visit. Which choice is best?",
+        choices: [
+          "Buy everything from large international stores.",
+          "Buy local products and support small businesses.",
+          "Avoid interacting with locals.",
+          "Ignore local markets."
+        ],
+        correctIndex: 1,
+        explanation: "Buying local products and supporting small businesses helps local economies and keeps travel more sustainable."
+      },
+      {
+        image: "quiz-responsible.png",
+        title: "What should you do when exploring nature?",
+        prompt: "You are hiking in a beautiful natural area. Which action keeps the environment protected?",
+        choices: [
+          "Pick flowers and plants.",
+          "Feed wild animals.",
+          "Leave food everywhere.",
+          "Stay on designated trails and protect wildlife."
+        ],
+        correctIndex: 3,
+        explanation: "Staying on marked trails and protecting wildlife helps preserve nature for future visitors and animals alike."
+      },
+      {
+        image: "quiz-beach.png",
+        title: "What is the best thing to do if you get lost in an unfamiliar place?",
+        prompt: "You need help in a new area. What is the safest and most responsible response?",
+        choices: [
+          "Stay calm and ask a trusted local authority for help.",
+          "Panic and run anywhere.",
+          "Follow strangers without checking.",
+          "Wander farther away."
+        ],
+        correctIndex: 0,
+        explanation: "Staying calm and asking a trusted local authority keeps you safer and helps you handle the situation responsibly."
+      },
+      {
+        image: "quiz-community.png",
+        title: "How can you reduce plastic waste during your trip?",
+        prompt: "You want to travel more sustainably. Which habit helps most?",
+        choices: [
+          "Use disposable plastic bottles every day.",
+          "Throw plastic into rivers.",
+          "Bring a reusable water bottle and shopping bag.",
+          "Leave plastic packaging behind."
+        ],
+        correctIndex: 2,
+        explanation: "Reusable bottles and bags reduce plastic waste and are a simple way to travel more responsibly."
+      },
+      {
+        image: "quiz-responsible.png",
+        title: "What should you do if you see a historical landmark?",
+        prompt: "You arrive at an important heritage site. What is the correct way to act?",
+        choices: [
+          "Write your name on it.",
+          "Climb on restricted structures.",
+          "Take pieces as souvenirs.",
+          "Admire it without touching or damaging it."
+        ],
+        correctIndex: 3,
+        explanation: "Admiring and respecting a historical landmark helps protect it for future generations and preserves cultural history."
+      },
+      {
+        image: "quiz-beach.png",
+        title: "What should you do to stay safe while traveling?",
+        prompt: "You want to be prepared and protected during your trip. Which step matters most?",
+        choices: [
+          "Share your personal information with strangers.",
+          "Keep emergency contacts and important documents accessible.",
+          "Ignore safety warnings.",
+          "Leave your belongings unattended."
+        ],
+        correctIndex: 1,
+        explanation: "Keeping emergency contacts and important documents accessible helps you stay prepared and secure while traveling."
+      }
+    ];
+    const travelTips = [
+      { title: "Protect Nature", category: "Nature", icon: "🌿", summary: "Don't litter, avoid damaging natural attractions, and keep our environment clean.", description: "Stay on marked paths, avoid picking plants, and take all garbage with you. A beautiful destination stays beautiful when visitors treat it with care." },
+      { title: "Respect Culture", category: "Culture", icon: "🏛️", summary: "Follow local customs, traditions, and be open to new experiences.", description: "Take a moment to learn local customs, say hello in the local language, and ask before photographing people or sacred spaces. Thoughtful travelers build trust and leave a better impression." },
+      { title: "Support Local Communities", category: "Community", icon: "🧺", summary: "Buy local, eat local, and help small businesses grow.", description: "Choose local cafés, markets, and tour guides to help keep community income in the area. Supporting small businesses makes travel more meaningful and sustainable." },
+      { title: "Reduce Waste", category: "Travel", icon: "♻️", summary: "Use less plastic, recycle, and choose eco-friendly options.", description: "Carry a reusable water bottle, bring a tote bag, and pack out what you pack in. Small daily choices can reduce the waste travelers create." },
+      { title: "Be Respectful", category: "Culture", icon: "📷", summary: "Ask permission before taking photos of people and their homes.", description: "Respect privacy and personal space. Always ask before taking photos, especially in homes, markets, or sacred spaces." },
+      { title: "Protect Heritage", category: "Community", icon: "🏰", summary: "Don't touch, write on, or damage historical sites and landmarks.", description: "Historic places matter because they preserve stories, identity, and beauty. Treat every site carefully and keep it safe for future generations." }
+    ];
+
+    function renderTipsList() {
+      const filteredTips = selectedTipFilter === "All"
+        ? travelTips
+        : travelTips.filter((tip) => tip.category === selectedTipFilter);
+
+      tipsList.replaceChildren();
+      if (!filteredTips.length) {
+        const empty = document.createElement("p");
+        empty.className = "tips-empty-state";
+        empty.textContent = "No tips in this category yet.";
+        tipsList.appendChild(empty);
+        return;
+      }
+
+      filteredTips.forEach((tip) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "tip-item";
+        button.innerHTML = `
+          <div class="tip-item-icon" aria-hidden="true">${tip.icon}</div>
+          <div class="tip-item-copy">
+            <strong>${tip.title}</strong>
+            <span>${tip.summary}</span>
+          </div>
+          <div class="tip-item-arrow" aria-hidden="true">→</div>
+        `;
+        button.addEventListener("click", () => showTipDetail(tip));
+        tipsList.appendChild(button);
+      });
+    }
+
+    function showTipDetail(tip) {
+      activeTip = tip;
+      tipsDetail.innerHTML = `
+        <button class="tips-detail-back" type="button">← Back to tips</button>
+        <div class="tips-detail-card">
+          <div class="tips-detail-icon" aria-hidden="true">${tip.icon}</div>
+          <h3>${tip.title}</h3>
+          <p>${tip.description}</p>
+        </div>
+      `;
+      tipsDetail.classList.add("is-visible");
+      tipsDetail.hidden = false;
+      tipsDetail.querySelector(".tips-detail-back").addEventListener("click", () => {
+        activeTip = null;
+        tipsDetail.classList.remove("is-visible");
+        tipsDetail.hidden = true;
+      });
+      tipsList.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function resetTipView() {
+      activeTip = null;
+      selectedTipFilter = "All";
+      document.querySelectorAll(".tip-filter").forEach((button) => {
+        const isSelected = button.dataset.tipFilter === "All";
+        button.classList.toggle("is-selected", isSelected);
+      });
+      tipsDetail.classList.remove("is-visible");
+      tipsDetail.hidden = true;
+      renderTipsList();
+    }
+
+    function showCurrentPage() {
+      const route = window.location.hash.slice(1);
+      const activeAccount = sessionStorage.getItem(activeAccountKey);
+      const placeRoute = route.match(/^place\/([a-z0-9-]+)$/);
+      if ((route === "destinations" || route === "tips" || route === "quiz" || placeRoute) && !activeAccount) {
+        window.location.hash = "#login";
+        return;
+      }
+      currentDestination = placeRoute
+        ? destinations.find((item) => destinationSlug(item.name) === placeRoute[1])
+        : null;
+      if (placeRoute && !currentDestination) {
+        window.location.hash = "#destinations";
+        return;
+      }
+
+      const activePage = route === "login"
+        ? loginPage
+        : route === "signup"
+          ? signupPage
+          : route === "destinations"
+            ? destinationsPage
+            : route === "tips"
+              ? tipsPage
+              : route === "quiz"
+                ? quizPage
+                : currentDestination
+                  ? placePage
+                : homePage;
+
+      [homePage, loginPage, signupPage, destinationsPage, placePage, tipsPage, quizPage].forEach((page) => {
+        const isActive = page === activePage;
+        page.classList.toggle("is-active", isActive);
+        page.setAttribute("aria-hidden", String(!isActive));
+      });
+
+      document.title = activePage === loginPage
+        ? "Log in — Pocket World"
+        : activePage === signupPage
+          ? "Create account — Pocket World"
+          : activePage === destinationsPage
+            ? "Destinations — Pocket World"
+            : activePage === placePage
+              ? `${currentDestination.name} — Pocket World`
+              : activePage === tipsPage
+                ? "Travel Tips — Pocket World"
+                : activePage === quizPage
+                  ? "Travel Tips Quiz — Pocket World"
+                  : "Pocket World — Explore responsibly";
+
+      if (activePage === loginPage) {
+        loginForm.elements.identity.focus();
+      } else if (activePage === signupPage) {
+        signupForm.elements.name.focus();
+      } else if (activePage === placePage) {
+        placePage.scrollTop = 0;
+        placePlanStatus.textContent = "";
+        flightResults.replaceChildren();
+        renderPlace(currentDestination);
+      } else if (activePage === tipsPage) {
+        renderTipsList();
+      } else if (activePage === quizPage) {
+        renderQuizQuestion();
+      }
+    }
+
+    function destinationSlug(name) {
+      return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function getTripPlans() {
+      const storedPlans = localStorage.getItem(tripPlansStorageKey);
+      if (!storedPlans) {
+        return {};
+      }
+      const plans = JSON.parse(storedPlans);
+      if (!plans || Array.isArray(plans) || typeof plans !== "object" ||
+          Object.values(plans).some((items) => !Array.isArray(items) || items.some((item) => typeof item !== "string"))) {
+        throw new Error("Saved trip plans data is invalid.");
+      }
+      return plans;
+    }
+
+    function getCurrentTripItems(destination = currentDestination) {
+      const identity = sessionStorage.getItem(activeAccountKey);
+      if (!identity || !destination) {
+        return [];
+      }
+      return getTripPlans()[`${identity}|${destinationSlug(destination.name)}`] || [];
+    }
+
+    function toggleTripItem(destination, item, statusMessage) {
+      const identity = sessionStorage.getItem(activeAccountKey);
+      if (!identity) {
+        window.location.hash = "#login";
+        return;
+      }
+      const plans = getTripPlans();
+      const key = `${identity}|${destinationSlug(destination.name)}`;
+      const items = plans[key] || [];
+      const alreadySelected = items.includes(item);
+      plans[key] = alreadySelected
+        ? items.filter((savedItem) => savedItem !== item)
+        : [...items, item];
+      localStorage.setItem(tripPlansStorageKey, JSON.stringify(plans));
+      placePlanStatus.textContent = alreadySelected
+        ? `${statusMessage} removed from your trip.`
+        : `${statusMessage} added to your trip.`;
+      renderPlace(destination);
+    }
+
+    function renderPlace(destination) {
+      if (!destination) {
+        return;
+      }
+      placeHero.dataset.category = destination.category;
+      placeCategory.textContent = destination.category;
+      placeName.textContent = destination.name;
+      placeLocation.textContent = `⌖ ${destination.location}`;
+      placeRating.innerHTML = `<span class="star" aria-hidden="true">★</span> ${destination.rating} (${destination.reviews} reviews)`;
+      placeDescription.textContent = destination.description;
+      flightDestination.value = destination.location;
+      placeFavoriteButton.textContent = getFavorites().includes(destination.name) ? "♥" : "♡";
+      placeFavoriteButton.setAttribute(
+        "aria-label",
+        `${getFavorites().includes(destination.name) ? "Remove" : "Save"} ${destination.name} ${getFavorites().includes(destination.name) ? "from" : "to"} favorites`
+      );
+
+      const today = new Date();
+      const departureDate = new Date(today);
+      departureDate.setDate(today.getDate() + 30);
+      const toLocalDate = (date) => {
+        const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+        return localDate.toISOString().slice(0, 10);
+      };
+      flightForm.elements.departure.min = toLocalDate(today);
+      if (!flightForm.elements.departure.value) {
+        flightForm.elements.departure.value = toLocalDate(departureDate);
+      }
+
+      const selectedItems = getCurrentTripItems(destination);
+      placeItinerary.replaceChildren();
+      destination.itinerary.forEach(([title, details], index) => {
+        const itemKey = `day-${index + 1}`;
+        const card = document.createElement("article");
+        card.className = "itinerary-day";
+        const heading = document.createElement("h3");
+        heading.textContent = `Day ${index + 1} · ${title}`;
+        const description = document.createElement("p");
+        description.textContent = details;
+        const button = document.createElement("button");
+        button.className = "itinerary-add";
+        button.type = "button";
+        button.textContent = selectedItems.includes(itemKey) ? "✓ Added to my trip" : "+ Add this day";
+        button.setAttribute("aria-pressed", String(selectedItems.includes(itemKey)));
+        button.addEventListener("click", () => toggleTripItem(destination, itemKey, `Day ${index + 1}`));
+        card.append(heading, description, button);
+        placeItinerary.append(card);
+      });
+
+      placeActivities.replaceChildren();
+      destination.activities.forEach((activity, index) => {
+        const itemKey = `activity-${index + 1}`;
+        const button = document.createElement("button");
+        button.className = "activity-chip";
+        button.type = "button";
+        button.textContent = `${selectedItems.includes(itemKey) ? "✓ " : "+ "}${activity}`;
+        button.classList.toggle("is-selected", selectedItems.includes(itemKey));
+        button.setAttribute("aria-pressed", String(selectedItems.includes(itemKey)));
+        button.addEventListener("click", () => toggleTripItem(destination, itemKey, activity));
+        placeActivities.append(button);
+      });
+
+      placePlanButton.textContent = selectedItems.includes("place")
+        ? "✓ Saved to my trip"
+        : "＋ Add to my trip";
+      placePlanButton.setAttribute("aria-pressed", String(selectedItems.includes("place")));
+    }
+
+    function showSavedTrip() {
+      const identity = sessionStorage.getItem(activeAccountKey);
+      const plans = getTripPlans();
+      const savedDestinations = destinations.filter((destination) =>
+        (plans[`${identity}|${destinationSlug(destination.name)}`] || []).length > 0
+      );
+      showDestinationList(
+        "My trip",
+        savedDestinations,
+        "Your trip is empty. Open a destination and tap “Add to my trip” to save it here."
+      );
+    }
+
+    function renderQuizQuestion() {
+      const question = quizQuestions[currentQuizIndex];
+      if (!question) {
+        return;
+      }
+      quizAnswered = false;
+      quizBackground.src = question.image;
+      quizProgress.textContent = `QUESTION ${currentQuizIndex + 1} OF ${quizQuestions.length}`;
+      quizTitle.textContent = question.title;
+      quizPrompt.textContent = question.prompt;
+      quizScoreElement.textContent = `Score: ${quizScore}/${quizQuestions.length * 2}`;
+      quizFeedback.hidden = true;
+      quizFeedback.classList.remove("is-wrong");
+      quizNextButton.disabled = true;
+      quizNextButton.textContent = "Next →";
+      quizAnswers.replaceChildren();
+
+      question.choices.forEach((choice, index) => {
+        const answerButton = document.createElement("button");
+        answerButton.className = "quiz-answer";
+        answerButton.type = "button";
+        answerButton.setAttribute("aria-label", `Answer ${String.fromCharCode(65 + index)}: ${choice}`);
+
+        const answerTextWrap = document.createElement("div");
+        answerTextWrap.className = "quiz-answer-text";
+        const letter = document.createElement("span");
+        letter.className = "quiz-answer-letter";
+        letter.textContent = String.fromCharCode(65 + index);
+        const answerText = document.createElement("span");
+        answerText.textContent = choice;
+        answerTextWrap.append(letter, answerText);
+
+        answerButton.append(answerTextWrap);
+        answerButton.addEventListener("click", () => selectQuizAnswer(index, answerButton));
+        quizAnswers.append(answerButton);
+      });
+
+    }
+
+    function selectQuizAnswer(index, answerButton) {
+      if (quizAnswered) {
+        return;
+      }
+
+      const question = quizQuestions[currentQuizIndex];
+      const isCorrect = index === question.correctIndex;
+      quizAnswers.querySelectorAll(".quiz-answer").forEach((button) => {
+        button.classList.remove("is-wrong");
+      });
+      quizFeedback.hidden = false;
+
+      if (!isCorrect) {
+        answerButton.classList.add("is-wrong");
+        quizFeedback.classList.add("is-wrong");
+        quizFeedbackIcon.textContent = "↻";
+        quizFeedbackTitle.textContent = "Not quite yet!";
+        quizFeedbackCopy.textContent = "That answer isn’t right. Try another choice!";
+        return;
+      }
+
+      quizAnswered = true;
+      quizScore += 2;
+      answerButton.classList.add("is-correct");
+      quizAnswers.querySelectorAll(".quiz-answer").forEach((button) => {
+        button.disabled = true;
+      });
+      quizFeedback.classList.remove("is-wrong");
+      quizFeedbackIcon.textContent = "🏆";
+      quizFeedbackTitle.textContent = "Great choice!";
+      quizFeedbackCopy.textContent = question.explanation;
+      quizScoreElement.textContent = `Score: ${quizScore}/${quizQuestions.length * 2}`;
+      quizNextButton.disabled = false;
+    }
+
+    function finishQuiz() {
+      const score = quizScore;
+      setDialog(
+        "Quiz complete!",
+        `Great work! Your final score is ${score}/${quizQuestions.length * 2}. Keep exploring and traveling responsibly.`,
+        [{
+          label: "Return to destinations",
+          onClick: () => {
+            infoDialog.close();
+            window.location.hash = "#destinations";
+          }
+        }]
+      );
+    }
+
+    quizNextButton.addEventListener("click", () => {
+      if (!quizAnswered) {
+        return;
+      }
+      if (currentQuizIndex === quizQuestions.length - 1) {
+        finishQuiz();
+        return;
+      }
+      currentQuizIndex += 1;
+      renderQuizQuestion();
+    });
+
+    function setDialog(title, description, actions = []) {
+      dialogTitle.textContent = title;
+      dialogCopy.textContent = description;
+      dialogActions.replaceChildren();
+      actions.forEach(({ label, onClick }) => {
+        const button = document.createElement("button");
+        button.className = "dialog-action";
+        button.type = "button";
+        button.textContent = label;
+        button.addEventListener("click", onClick);
+        dialogActions.append(button);
+      });
+      if (!infoDialog.open) {
+        infoDialog.showModal();
+      }
+    }
+
+    function getFavorites() {
+      const saved = localStorage.getItem(favoritesStorageKey);
+      if (!saved) {
+        return [];
+      }
+      const favorites = JSON.parse(saved);
+      if (!Array.isArray(favorites) || favorites.some((favorite) => typeof favorite !== "string")) {
+        throw new Error("Saved favorites data is invalid.");
+      }
+      return favorites;
+    }
+
+    function updateFavoriteButtons() {
+      const favorites = getFavorites();
+      document.querySelectorAll("[data-favorite]").forEach((button) => {
+        const name = button.dataset.favorite;
+        const isSaved = favorites.includes(name);
+        button.classList.toggle("is-saved", isSaved);
+        button.textContent = isSaved ? "♥" : "";
+        button.setAttribute(
+          "aria-label",
+          `${isSaved ? "Remove" : "Save"} ${name} ${isSaved ? "from" : "to"} favorites`
+        );
+      });
+    }
+
+    function showDestination(destination) {
+      if (infoDialog.open) {
+        infoDialog.close();
+      }
+      window.location.hash = `#place/${destinationSlug(destination.name)}`;
+    }
+
+    function toggleFavorite(name) {
+      const favorites = getFavorites();
+      const isSaved = favorites.includes(name);
+      const updated = isSaved
+        ? favorites.filter((favorite) => favorite !== name)
+        : [...favorites, name];
+      localStorage.setItem(favoritesStorageKey, JSON.stringify(updated));
+      updateFavoriteButtons();
+      destinationNotice.textContent = isSaved
+        ? `${name} removed from your favorites.`
+        : `${name} saved to your favorites.`;
+      window.setTimeout(() => {
+        destinationNotice.textContent = "";
+      }, 2200);
+    }
+
+    function showDestinationList(title, items, emptyMessage) {
+      if (items.length === 0) {
+        setDialog(title, emptyMessage);
+        return;
+      }
+      setDialog(
+        title,
+        `${items.length} ${items.length === 1 ? "destination" : "destinations"} found. Select one to see details.`,
+        items.map((destination) => ({
+          label: `${destination.name} · ${destination.location}`,
+          onClick: () => showDestination(destination)
+        }))
+      );
+    }
+
+    function filterDestinations(category, query = "") {
+      const normalizedQuery = query.trim().toLowerCase();
+      const categories = categoryAliases[category];
+      return destinations.filter((destination) => {
+        const matchesCategory = !categories || categories.includes(destination.category);
+        const matchesQuery = !normalizedQuery ||
+          `${destination.name} ${destination.location} ${destination.category}`.toLowerCase().includes(normalizedQuery);
+        return matchesCategory && matchesQuery;
+      });
+    }
+
+    function showCategoryResults(category) {
+      selectedCategory = category;
+      document.querySelectorAll("[data-category]").forEach((button) => {
+        const isSelected = button.dataset.category === category;
+        button.classList.toggle("is-selected", isSelected);
+        button.setAttribute("aria-pressed", String(isSelected));
+      });
+      const results = filterDestinations(category);
+      destinationNotice.textContent = category === "All"
+        ? "Showing all destinations."
+        : `Showing ${category.toLowerCase()} destinations.`;
+      window.setTimeout(() => {
+        destinationNotice.textContent = "";
+      }, 2200);
+      showDestinationList(
+        `${category} destinations`,
+        results,
+        `No destinations are currently listed for ${category.toLowerCase()}.`
+      );
+    }
+
+    function showSearchResults() {
+      const query = destinationSearch.value.trim();
+      if (!query) {
+        if (infoDialog.open) {
+          infoDialog.close();
+        }
+        return;
+      }
+      const results = filterDestinations(selectedCategory, query);
+      showDestinationList(
+        "Search results",
+        results,
+        `No destinations matched “${query}”. Try another name, place, or category.`
+      );
+      destinationSearch.focus();
+    }
+
+    function getAccounts() {
+      const storedAccounts = localStorage.getItem(accountsStorageKey);
+      if (!storedAccounts) {
+        return [];
+      }
+
+      const accounts = JSON.parse(storedAccounts);
+      if (!Array.isArray(accounts)) {
+        throw new Error("Saved account data is invalid.");
+      }
+      return accounts;
+    }
+
+    function toHex(bytes) {
+      return Array.from(new Uint8Array(bytes), (byte) =>
+        byte.toString(16).padStart(2, "0")
+      ).join("");
+    }
+
+    function toBase64(bytes) {
+      return btoa(String.fromCharCode(...new Uint8Array(bytes)));
+    }
+
+    async function hashPassword(password, salt) {
+      if (!window.crypto?.subtle) {
+        throw new Error("Secure password storage is unavailable in this browser. Open the app in a modern browser.");
+      }
+      const key = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(password),
+        "PBKDF2",
+        false,
+        ["deriveBits"]
+      );
+      return crypto.subtle.deriveBits(
+        { name: "PBKDF2", hash: "SHA-256", salt, iterations: 210000 },
+        key,
+        256
+      );
+    }
+
+    async function saveAccount(event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const notice = accountNotice.signup;
+      const name = form.elements.name.value.trim();
+      const identity = form.elements.identity.value.trim().toLowerCase();
+      const password = form.elements.password.value;
+      const confirmPassword = form.elements.confirmPassword.value;
+
+      notice.textContent = "";
+      if (password !== confirmPassword) {
+        notice.textContent = "Those passwords do not match. Please try again.";
+        form.elements.confirmPassword.focus();
+        return;
+      }
+      if (password.length < 8) {
+        notice.textContent = "Choose a password with at least 8 characters.";
+        form.elements.password.focus();
+        return;
+      }
+
+      try {
+        const accounts = getAccounts();
+        if (accounts.some((account) => account.identity === identity)) {
+          notice.textContent = "An account with that email or username already exists. Log in instead.";
+          return;
+        }
+
+        const salt = crypto.getRandomValues(new Uint8Array(16));
+        const passwordHash = await hashPassword(password, salt);
+        accounts.push({
+          name,
+          identity,
+          salt: toBase64(salt),
+          passwordHash: toHex(passwordHash)
+        });
+        localStorage.setItem(accountsStorageKey, JSON.stringify(accounts));
+        loginForm.elements.identity.value = identity;
+        accountNotice.login.textContent = "Account created and saved on this device. Log in to continue.";
+        form.reset();
+        window.location.hash = "#login";
+      } catch (error) {
+        notice.textContent = error instanceof Error
+          ? `Could not save your account: ${error.message}`
+          : "Could not save your account in this browser.";
+      }
+    }
+
+    async function logIn(event) {
+      event.preventDefault();
+      const form = event.currentTarget;
+      const notice = accountNotice.login;
+      const identity = form.elements.identity.value.trim().toLowerCase();
+      const password = form.elements.password.value;
+
+      notice.textContent = "";
+      try {
+        const account = getAccounts().find((savedAccount) => savedAccount.identity === identity);
+        if (!account) {
+          notice.textContent = "We couldn't find that account on this device. Check your details or sign up.";
+          return;
+        }
+
+        const salt = Uint8Array.from(atob(account.salt), (character) => character.charCodeAt(0));
+        const enteredHash = toHex(await hashPassword(password, salt));
+        if (enteredHash !== account.passwordHash) {
+          notice.textContent = "That password doesn't match this account. Please try again.";
+          return;
+        }
+
+        dialogTitle.textContent = `Welcome back, ${account.name}!`;
+        dialogCopy.textContent = "You're logged in and ready to explore Pocket World.";
+        notice.textContent = "";
+        form.reset();
+        sessionStorage.setItem(activeAccountKey, account.identity);
+        window.location.hash = "#destinations";
+        setDialog(dialogTitle.textContent, dialogCopy.textContent);
+      } catch (error) {
+        notice.textContent = error instanceof Error
+          ? `Could not log in: ${error.message}`
+          : "Could not log in. Please try again.";
+      }
+    }
+
+    document.querySelectorAll("[data-panel]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const [title, description] = panelContent[button.dataset.panel];
+        dialogTitle.textContent = title;
+        dialogCopy.textContent = description;
+        infoDialog.showModal();
+      });
+    });
+
+    document.querySelector(".dialog-close").addEventListener("click", () => {
+      infoDialog.close();
+    });
+
+    document.querySelector("#place-back").addEventListener("click", () => {
+      window.location.hash = "#destinations";
+    });
+
+    placeFavoriteButton.addEventListener("click", () => {
+      if (currentDestination) {
+        toggleFavorite(currentDestination.name);
+        renderPlace(currentDestination);
+      }
+    });
+
+    document.querySelector("#place-share").addEventListener("click", async () => {
+      if (!currentDestination) {
+        return;
+      }
+      const url = `${window.location.href.split("#")[0]}#place/${destinationSlug(currentDestination.name)}`;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: currentDestination.name, text: currentDestination.description, url });
+        } catch (error) {
+          if (error.name !== "AbortError") {
+            setDialog("Couldn't share this destination", "Sharing isn't available right now. You can copy the current page address from your browser.");
+          }
+        }
+        return;
+      }
+      setDialog("Share this destination", `Copy this link to share ${currentDestination.name}:\n${url}`);
+    });
+
+    document.querySelectorAll("[data-place-tab]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const section = document.querySelector(`#place-${button.dataset.placeTab}`);
+        if (!section) {
+          return;
+        }
+        document.querySelectorAll("[data-place-tab]").forEach((tab) => {
+          tab.classList.toggle("is-active", tab === button);
+        });
+        section.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+
+    flightForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      if (!currentDestination) {
+        return;
+      }
+      const formData = new FormData(flightForm);
+      const sample = document.createElement("div");
+      sample.className = "suggested-flight";
+      const routeCopy = document.createElement("div");
+      const routeTitle = document.createElement("strong");
+      routeTitle.textContent = `${formData.get("from")} → ${formData.get("to")}`;
+      const routeNote = document.createElement("small");
+      routeNote.textContent = `${formData.get("departure")} · ${formData.get("travelers")} traveler(s)`;
+      routeCopy.append(routeTitle, routeNote);
+      const indicator = document.createElement("span");
+      indicator.className = "flight-route";
+      indicator.setAttribute("aria-hidden", "true");
+      indicator.textContent = "✈";
+      const disclaimer = document.createElement("small");
+      disclaimer.textContent = "Sample route only. Live schedules and fares are not connected.";
+      const bookButton = document.createElement("button");
+      bookButton.className = "flight-book";
+      bookButton.type = "button";
+      bookButton.textContent = "Details";
+      bookButton.addEventListener("click", () => {
+        setDialog(
+          "Flight search demo",
+          "This planner does not connect to airlines or booking services. Check current schedules, prices, and travel requirements directly with an airline or trusted travel provider."
+        );
+      });
+      sample.append(routeCopy, indicator, disclaimer, bookButton);
+      flightResults.replaceChildren(sample);
+      sample.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    });
+
+    placePlanButton.addEventListener("click", () => {
+      if (currentDestination) {
+        toggleTripItem(currentDestination, "place", currentDestination.name);
+      }
+    });
+
+    document.querySelectorAll("[data-place-nav]").forEach((button) => {
+      button.addEventListener("click", () => {
+        switch (button.dataset.placeNav) {
+          case "destinations":
+            window.location.hash = "#destinations";
+            break;
+          case "trip":
+            showSavedTrip();
+            break;
+          case "tips":
+            currentQuizIndex = 0;
+            quizScore = 0;
+            window.location.hash = "#tips";
+            break;
+          default:
+            break;
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-destination]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const destination = destinations.find((item) => item.name === button.dataset.destination);
+        if (destination) {
+          showDestination(destination);
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-favorite]").forEach((button) => {
+      button.addEventListener("click", () => {
+        toggleFavorite(button.dataset.favorite);
+      });
+    });
+
+    document.querySelectorAll("[data-category]").forEach((button) => {
+      button.setAttribute("aria-pressed", String(button.dataset.category === selectedCategory));
+      button.addEventListener("click", () => {
+        showCategoryResults(button.dataset.category);
+      });
+    });
+
+    destinationSearch.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        showSearchResults();
+      }
+    });
+
+    document.querySelectorAll("[data-destination-action]").forEach((button) => {
+      button.addEventListener("click", () => {
+        switch (button.dataset.destinationAction) {
+          case "menu":
+            setDialog("Pocket World", "Choose a part of your journey.", [
+              {
+                label: "Home",
+                onClick: () => {
+                  window.location.hash = "#home";
+                  infoDialog.close();
+                }
+              },
+              {
+                label: "Profile",
+                onClick: () => {
+                  const identity = sessionStorage.getItem(activeAccountKey);
+                  const account = getAccounts().find((item) => item.identity === identity);
+                  setDialog("Your profile", account ? `${account.name}\n${account.identity}` : "Your profile is unavailable.", [
+                    {
+                      label: "Log out",
+                      onClick: () => {
+                        sessionStorage.removeItem(activeAccountKey);
+                        window.location.hash = "#home";
+                        infoDialog.close();
+                      }
+                    }
+                  ]);
+                }
+              }
+            ]);
+            break;
+          case "favorites":
+            showDestinationList(
+              "Saved destinations",
+              destinations.filter((item) => getFavorites().includes(item.name)),
+              "You haven't saved any destinations yet. Tap a heart to save a place."
+            );
+            break;
+          case "filters":
+            setDialog("Filter destinations", "Choose a category to browse.", Object.keys(categoryAliases).map((category) => ({
+              label: category,
+              onClick: () => showCategoryResults(category)
+            })));
+            break;
+          case "more":
+            showDestinationList("More destinations", destinations.slice(6), "There are no more destinations right now.");
+            break;
+          case "tips":
+            currentQuizIndex = 0;
+            quizScore = 0;
+            window.location.hash = "#tips";
+            break;
+          case "destinations":
+            selectedCategory = "All";
+            destinationSearch.value = "";
+            document.querySelectorAll("[data-category]").forEach((categoryButton) => {
+              const isSelected = categoryButton.dataset.category === "All";
+              categoryButton.classList.toggle("is-selected", isSelected);
+              categoryButton.setAttribute("aria-pressed", String(isSelected));
+            });
+            destinationNotice.textContent = "You're browsing all destinations.";
+            window.setTimeout(() => {
+              destinationNotice.textContent = "";
+            }, 2200);
+            break;
+          case "profile": {
+            const identity = sessionStorage.getItem(activeAccountKey);
+            const account = getAccounts().find((item) => item.identity === identity);
+            setDialog("Your profile", account ? `${account.name}\n${account.identity}` : "Your profile is unavailable.", [
+              {
+                label: "Log out",
+                onClick: () => {
+                  sessionStorage.removeItem(activeAccountKey);
+                  window.location.hash = "#home";
+                  infoDialog.close();
+                }
+              }
+            ]);
+            break;
+          }
+          default:
+            break;
+        }
+      });
+    });
+
+    document.querySelectorAll("[data-toggle-password]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const input = button.parentElement.querySelector("input");
+        const isVisible = input.type === "text";
+        input.type = isVisible ? "password" : "text";
+        button.setAttribute("aria-label", isVisible ? "Show password" : "Hide password");
+      });
+    });
+
+    document.querySelectorAll(".tip-filter").forEach((button) => {
+      button.addEventListener("click", () => {
+        selectedTipFilter = button.dataset.tipFilter;
+        document.querySelectorAll(".tip-filter").forEach((filterButton) => {
+          const isSelected = filterButton === button;
+          filterButton.classList.toggle("is-selected", isSelected);
+        });
+        activeTip = null;
+        tipsDetail.classList.remove("is-visible");
+        tipsDetail.hidden = true;
+        renderTipsList();
+      });
+    });
+
+    tipsBackButton.addEventListener("click", () => {
+      window.location.hash = "#destinations";
+    });
+
+    tipsQuizButton.addEventListener("click", () => {
+      currentQuizIndex = 0;
+      quizScore = 0;
+      quizAnswered = false;
+      window.location.hash = "#quiz";
+    });
+
+    document.querySelectorAll("[data-main-nav]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = button.dataset.mainNav;
+        document.querySelectorAll("[data-main-nav]").forEach((navButton) => {
+          navButton.classList.toggle("is-active", navButton === button);
+        });
+        switch (target) {
+          case "home":
+            window.location.hash = "#home";
+            break;
+          case "destinations":
+            window.location.hash = "#destinations";
+            break;
+          case "tips":
+            window.location.hash = "#tips";
+            break;
+          case "profile":
+            {
+              const identity = sessionStorage.getItem(activeAccountKey);
+              const account = getAccounts().find((item) => item.identity === identity);
+              setDialog("Your profile", account ? `${account.name}\n${account.identity}` : "Your profile is unavailable.", [
+                {
+                  label: "Log out",
+                  onClick: () => {
+                    sessionStorage.removeItem(activeAccountKey);
+                    window.location.hash = "#home";
+                    infoDialog.close();
+                  }
+                }
+              ]);
+            }
+            break;
+          default:
+            break;
+        }
+      });
+    });
+
+    window.addEventListener("hashchange", showCurrentPage);
+    loginForm.addEventListener("submit", logIn);
+    signupForm.addEventListener("submit", saveAccount);
+    updateFavoriteButtons();
+    showCurrentPage();
+  </script>
+</body>
+</html>
